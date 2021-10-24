@@ -3,6 +3,8 @@ const mysql = require('mysql2');
 const path = require('path');
 const fs = require('fs');
 const inquirer = require('inquirer');
+const { allowedNodeEnvironmentFlags } = require('process');
+const Connection = require('mysql2/typings/mysql/lib/Connection');
 //port
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -62,10 +64,87 @@ const promptUser = () => {
     ])
     .then((answers) => {
         const { choices } = answers;
-
+        //1
         if (choices === "View all departments") {
             showDepartments();
         }
+        //2
+        if (choices === "View all roles") {
+            showRoles();
+        }
+        //3    
+        if (choices === "View all employees") {
+            showEmployees();
+        }
+        //4
+        if (choices === "Add a department") {
+            addDepartment();
+        }
+        //5
+        if (choices === "Add a role") {
+            addRole();
+        }
+        //6
+        if (choices === "Add an employee") {
+            addEmployee();
+        }
+        //7
+        if (choices === "Update an employee role") {
+            updateEmployee();
+        }
+        //8
+        if (choices === "Update an employee manager") {
+            updateManager();
+        }
+        //9
+        if (choices === "View employees by department") {
+            employeeDepartment();
+        }
+        //10    
+        if (choices === "Delete a department") {
+            deleteDepartment();
+        }
+        //11
+        if (choices === "Delete a role") {
+            deleteRole();
+        }
+        //12
+        if (choices === "Delete an employee") {
+            deleteEmployee();
+        }
+        //13
+        if (choices === "No Action") {
+            db.end()
+        };
+        
+    });
+};
 
-    })
+//1
+showDepartments = () => {
+
 }
+
+//2
+
+//3
+
+//4
+
+//5
+
+//6
+
+//7
+
+//8
+
+//9
+
+//10
+
+//11
+
+//12
+
+//13
