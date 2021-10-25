@@ -3,8 +3,6 @@ const mysql = require('mysql2');
 const path = require('path');
 const fs = require('fs');
 const inquirer = require('inquirer');
-const { allowedNodeEnvironmentFlags } = require('process');
-const Connection = require('mysql2/typings/mysql/lib/Connection');
 //port
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -14,7 +12,7 @@ app.use(express.urlencoded({ extended: false}));
 app.use(express.json());
 
 //Connect to database
-const db = mysql.createConnection(
+const connection = mysql.createConnection(
     {
         host: 'localhost',
         user: 'root',
@@ -24,7 +22,7 @@ const db = mysql.createConnection(
     console.log('Connected to employee_db database')
 );
 
-db.connect(err => {
+connection.connect(err => {
     if(err) throw err;
     startImage();
 });
@@ -114,7 +112,7 @@ const promptUser = () => {
         }
         //13
         if (choices === "No Action") {
-            db.end()
+            connection.end()
         };
         
     });
@@ -122,7 +120,13 @@ const promptUser = () => {
 
 //1
 showDepartments = () => {
-
+    console.log('Showing all departments...\n')
+    connection.query("SELECT department.id AS id, department.name AS department FROM department;",
+    function(err, res) {
+        if (err) throw err
+        console.table(res)
+        promptUser()
+    })
 }
 
 //2
