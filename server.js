@@ -127,10 +127,18 @@ showDepartments = () => {
         console.table(res)
         promptUser()
     })
-}
+};
 
 //2
-
+showRoles = () => {
+    console.log('Showing all roles...\n');
+    connection.query("SELECT role.id, role.title, department.name AS department FROM role INNER JOIN department ON role.department_id = department.id;",
+    function(err, res) {
+        if (err) throw err
+        console.table(res)
+        promptUser()
+    })
+};
 //3
 
 //4
