@@ -149,7 +149,7 @@ showEmployees = () => {
         console.table(res)
         promptUser();
     }
-};
+}
 //4
 addDepartment = () => {
     inquirer.prompt([
@@ -173,7 +173,37 @@ addDepartment = () => {
     })
 }
 //5
-// addRole
+addRole = () => {
+    connection.query("SELECT role.title AS Title, role.salary AS Salary FROM role", 
+    function(err, res) {
+        inquirer.prompt([
+            {
+                name: "Title",
+                type: "input",
+                message: "What is the roles Title?"
+            },
+            {
+                name: "Salary",
+                type: "input",
+                message: "What is the Salary?"
+
+            }
+        ]) .then(function(res) {
+            connection.query(
+                "INSERT INTO role SET ?",
+                {
+                    title: res.Title,
+                    salary: res.Salary,
+              },
+              function(err) {
+                  if(err) throw err
+                  console.table(res);
+                  promptUser();
+              }
+            )
+        });
+    });
+}
 // //6
 // addEmployee
 // //7
