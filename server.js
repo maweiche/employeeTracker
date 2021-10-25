@@ -140,23 +140,25 @@ showRoles = () => {
     })
 };
 //3
-
+showEmployees = () => {
+    console.log('Showing all employees...\n');
+    connection.query("SELECT teamMember.id, teamMember.first_name, teamMember.last_name, teamMember.role_id, teamMember.manager_id AS role FROM department;")
+}
 //4
-
+addDepartment
 //5
-
+addRole
 //6
-
+addEmployee
 //7
-
+updateEmployee
 //8
-
+updateManager
 //9
-
+employeeDepartment
 //10
-
+deleteDepartment
 //11
-
+deleteRole
 //12
-
-//13
+deleteEmployee
