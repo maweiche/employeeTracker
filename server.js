@@ -53,9 +53,6 @@ const promptUser = () => {
                         'Add an employee',
                         'Update an employee role',
                         'View employees by department',
-                        'Delete a department',
-                        'Delete a role',
-                        'Delete an employee',
                         'No Action']
         }
     ])
@@ -89,23 +86,11 @@ const promptUser = () => {
         if (choices === "Update an employee role") {
             updateEmployee();
         }
-        //9
+        //8
         if (choices === "View employees by department") {
             employeeDepartment();
         }
-        //10    
-        if (choices === "Delete a department") {
-            deleteDepartment();
-        }
-        //11
-        if (choices === "Delete a role") {
-            deleteRole();
-        }
-        //12
-        if (choices === "Delete an employee") {
-            deleteEmployee();
-        }
-        //13
+        //9
         if (choices === "No Action") {
             connection.end()
         };
@@ -293,9 +278,3 @@ employeeDepartment = () => {
             promptUser()
         })
     }
-// //10
-// deleteDepartment
-// //11
-// deleteRole
-// //12
-// deleteEmployee
