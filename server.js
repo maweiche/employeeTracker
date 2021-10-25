@@ -52,7 +52,6 @@ const promptUser = () => {
                         'Add a role',
                         'Add an employee',
                         'Update an employee role',
-                        'Update an employee manager',
                         'View employees by department',
                         'Delete a department',
                         'Delete a role',
@@ -89,10 +88,6 @@ const promptUser = () => {
         //7
         if (choices === "Update an employee role") {
             updateEmployee();
-        }
-        //8
-        if (choices === "Update an employee manager") {
-            updateManager();
         }
         //9
         if (choices === "View employees by department") {
@@ -289,10 +284,15 @@ updateEmployee = () => {
         });
     });
 }
-// //8
-// updateManager
 // //9
-// employeeDepartment
+employeeDepartment = () => {
+        connection.query("SELECT teamMember.first_name, teamMember.last_name, department.name AS Department FROM teamMember JOIN role ON teamMember.role_id = role.id JOIN department ON role.department_id = department.id ORDER BY teamMember.id;",
+        function(err, res) {
+            if (err) throw err
+            console.table(res)
+            promptUser()
+        })
+    }
 // //10
 // deleteDepartment
 // //11
