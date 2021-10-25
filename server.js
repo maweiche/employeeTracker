@@ -142,28 +142,49 @@ showRoles = () => {
 //3
 showEmployees = () => {
     console.log('Showing all employees...\n');
-    connection.query("SELECT teamMember.first_name, teamMember.last_name, role.title AS Title FROM teamMember JOIN role ON teamMember.role_id = role.id;"),
+    // connection.query("SELECT teamMember.first_name, teamMember.last_name, role.title AS title FROM teamMember JOIN role ON teamMember.role_id = role.id;"),
+    connection.query("SELECT * FROM teamMember"),
     function(err, res) {
         if (err) throw err
         console.table(res)
         promptUser();
     }
-}
+};
 //4
-addDepartment
+addDepartment = () => {
+    inquirer.prompt([
+        {
+            name: "name",
+            type: "input",
+            message: "What Department would you liket to add?"
+        }
+    ]).then(function(res) {
+        var query = connection.query(
+            "INSERT INTO department SET ?",
+            {
+                name: res.name
+            },
+            function(err) {
+                if (err) throw err
+                console.table(res);
+                promptUser();
+            }
+        )
+    })
+}
 //5
-addRole
-//6
-addEmployee
-//7
-updateEmployee
-//8
-updateManager
-//9
-employeeDepartment
-//10
-deleteDepartment
-//11
-deleteRole
-//12
-deleteEmployee
+// addRole
+// //6
+// addEmployee
+// //7
+// updateEmployee
+// //8
+// updateManager
+// //9
+// employeeDepartment
+// //10
+// deleteDepartment
+// //11
+// deleteRole
+// //12
+// deleteEmployee
