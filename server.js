@@ -127,7 +127,7 @@ showDepartments = () => {
         console.table(res)
         promptUser()
     })
-};
+}
 
 //2
 showRoles = () => {
@@ -138,11 +138,16 @@ showRoles = () => {
         console.table(res)
         promptUser()
     })
-};
+}
 //3
 showEmployees = () => {
     console.log('Showing all employees...\n');
-    connection.query("SELECT teamMember.id, teamMember.first_name, teamMember.last_name, teamMember.role_id, teamMember.manager_id AS role FROM department;")
+    connection.query("SELECT teamMember.first_name, teamMember.last_name, role.title AS Title FROM teamMember JOIN role ON teamMember.role_id = role.id;"),
+    function(err, res) {
+        if (err) throw err
+        console.table(res)
+        promptUser();
+    }
 }
 //4
 addDepartment
