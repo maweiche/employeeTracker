@@ -142,13 +142,13 @@ showRoles = () => {
 //3
 showEmployees = () => {
     console.log('Showing all employees...\n');
-    // connection.query("SELECT teamMember.first_name, teamMember.last_name, role.title AS title FROM teamMember JOIN role ON teamMember.role_id = role.id;"),
-    connection.query("SELECT * FROM teamMember"),
+    connection.query("SELECT teamMember.first_name, teamMember.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM teamMember INNER JOIN role on role.id = teamMember.role_id INNER JOIN department on department.id = role.department_id left join teamMember e on teamMember.manager_id = e.id;",
+    // connection.query("SELECT * FROM teamMember"),
     function(err, res) {
         if (err) throw err
         console.table(res)
         promptUser();
-    }
+    })
 }
 //4
 addDepartment = () => {
@@ -226,7 +226,7 @@ addEmployee = () => {
         {
             name: "choice",
             type: "rawlist",
-            message: "What is their managers name?"
+            message: "What is their managers name?",
             choices: selectManager()
         }
     ]).then(function (val) {
@@ -247,7 +247,48 @@ addEmployee = () => {
     })
 }
 // //7
-// updateEmployee
+updateEmployee = () => {
+    connection.query("SELECT employee.last_name, role.title FROM employee JOIN role ON employee.role_id = role.id;",
+    function(err, res) {
+
+        if (err) throw err
+        console.log(res)
+        inquirer.prompt([
+            {
+                name: "lastName",
+                type: "rawlist",
+                choices: function() {
+                    var lastName = [];
+                    for (var i = 0; i < res.length; i++) {
+                        lastName.push(res[i].last_name);
+                    }
+                    return lastName;
+                },
+                message: "What is the Employee's last name?",
+            },
+            {
+                name: "role",
+                type: "rawlist",
+                message: "what is the Employees new titl?",
+                choices: selectRole()
+            },
+        ]).then(function(val) {
+            var roleId = selectRole().indexOf(val.role) + 1
+            connection.query("UPDATE employee SET WHERE ?",
+            {
+                last_name: val.lastName
+            },
+            {
+                role_id: roleId
+            },
+            function(err) {
+                if (err) throw err
+                console.table(val)
+                promptUser()
+            })
+        });
+    });
+}
 // //8
 // updateManager
 // //9
