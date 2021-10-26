@@ -97,7 +97,19 @@ const promptUser = () => {
         
     });
 };
-
+//select role title for add employee
+var roleArr = [];
+function selectRole() {
+    connection.query("SELECT * FROM role",
+    function(err, res) 
+    {
+    if (err) throw err
+    for (var i = 0; i < res.length; i++) {
+        roleArr.push(res[i].title);
+    }
+    })
+    return roleArr;
+}
 //1
 showDepartments = () => {
     console.log('Showing all departments...\n')
@@ -228,7 +240,7 @@ addEmployee = () => {
 }
 // //7
 updateEmployee = () => {
-    connection.query("SELECT employee.last_name, role.title FROM employee JOIN role ON employee.role_id = role.id;",
+    connection.query("SELECT teamMember.last_name, role.title FROM teamMember JOIN role ON teamMember.role_id = role.id;",
     function(err, res) {
 
         if (err) throw err
@@ -249,12 +261,12 @@ updateEmployee = () => {
             {
                 name: "role",
                 type: "rawlist",
-                message: "what is the Employees new titl?",
+                message: "what is the Employees new title?",
                 choices: selectRole()
             },
         ]).then(function(val) {
             var roleId = selectRole().indexOf(val.role) + 1
-            connection.query("UPDATE employee SET WHERE ?",
+            connection.query("UPDATE teamMember SET WHERE ?",
             {
                 last_name: val.lastName
             },
