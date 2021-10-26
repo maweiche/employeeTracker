@@ -17,7 +17,7 @@ The user will need to clone the repository from GitHub and `npm install` both My
 
 ## Deployed Link
 
-* [See Live Video]()
+* [See Live Video](https://watch.screencastify.com/v/PLVCdWC6mvyP4LHynjyH)
 
 
 ## Authors
