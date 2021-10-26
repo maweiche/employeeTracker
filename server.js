@@ -1,15 +1,6 @@
-const express = require('express');
 const mysql = require('mysql2');
-const path = require('path');
-const fs = require('fs');
 const inquirer = require('inquirer');
-//port
-const PORT = process.env.PORT || 3001;
-const app = express();
-//express middleware
-app.use(express.static('public'));
-app.use(express.urlencoded({ extended: false}));
-app.use(express.json());
+const cTable = require('console.table');
 
 //Connect to database
 const connection = mysql.createConnection(
@@ -90,10 +81,15 @@ const promptUser = () => {
         if (choices === "View employees by department") {
             employeeDepartment();
         }
+        //20
+        if (choices === "View Budget") {
+            viewBudget();
+        }
         //9
         if (choices === "No Action") {
             connection.end()
         };
+        
         
     });
 };
@@ -109,6 +105,18 @@ function selectRole() {
     }
     })
     return roleArr;
+}
+//select manager for add employee
+var managersArr = [];
+function selectManager() {
+    connection.query("SELECT first_name, last_name FROM teamMember WHERE manager_id IS NULL",
+    function (err, res) {
+        if (err) throw err
+        for (var i=0; i < res.length; i++) {
+            managersArr.push(res[i].first_name);
+        }
+    })
+    return managersArr;
 }
 //1
 showDepartments = () => {
@@ -133,6 +141,7 @@ showRoles = () => {
 }
 //3
 showEmployees = () => {
+
     console.log('Showing all employees...\n');
     connection.query("SELECT teamMember.first_name, teamMember.last_name, role.title, role.salary, department.name, CONCAT(e.first_name, ' ' ,e.last_name) AS Manager FROM teamMember INNER JOIN role on role.id = teamMember.role_id INNER JOIN department on department.id = role.department_id left join teamMember e on teamMember.manager_id = e.id;",
     // connection.query("SELECT * FROM teamMember"),
@@ -217,34 +226,23 @@ addEmployee = () => {
         },
         {
             name: "choice",
-            type: "rawlist",
+            type: "list",
             message: "What is their managers name?",
             choices: selectManager()
         }
-    ]).then(function (val) {
-        var roleId = selectRole().indexOf(val.role) + 1
-        var managerId = selectManager().indexOf(val.choice) + 1
-        connection.query("INSERT INTO employee SET ?",
-        {
-            first_name: val.firstName,
-            last_name: val.lastName,
-            manager_id: managerId,
-            role_id: roleId
-
-        }, function(err) {
-            if (err) throw err
-            console.table(val)
-            promptUser()
-        })
+    ]).then((answer) => {
+        connection.query(
+            `INSERT INTO teamMember(first_name, last_name, role_id, manager_id) VALUES(?, ?,
+            (SELECT id FROM role WHERE title = ? ),
+            (SELECT id FROM (SELECT id FROM teamMember WHERE CONCAT(first_name," ", last_name) = ? ) AS tmptable))`, [answer.firstname, answer.lastname, answer.role, answer.manager]
+        )
+        promptUser();
     })
 }
 // //7
-updateEmployee = () => {
-    connection.query("SELECT teamMember.last_name, role.title FROM teamMember JOIN role ON teamMember.role_id = role.id;",
-    function(err, res) {
-
-        if (err) throw err
-        console.log(res)
+function updateEmployee() {
+    connection.query("SELECT teamMember.last_name, role.title FROM teamMember JOIN role ON teamMember.role_id = role.id;", function (err, res) {
+    if (err) throw err
         inquirer.prompt([
             {
                 name: "lastName",
@@ -290,3 +288,4 @@ employeeDepartment = () => {
             promptUser()
         })
     }
+

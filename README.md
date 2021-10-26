@@ -4,22 +4,25 @@ The goal of this app is to allow users to create and manage an employee database
 
 ## Getting Started
 
-The user will need to clone the repository from GitHub and `npm install` both MySQL2, Inquirer and console.table. See the live site link for deployment on a live server.
+The user will need to clone the repository from GitHub and `npm install` both MySQL2, Inquirer and console.table. Once installed run node server.js in your CLI to start the Inquirer Prompts.
 
+
+## Technologies Used
+- MySQL
+- Express.js
+- Node.js
+- Javascript
+- Git
+- GitHub
 
 ## Deployed Link
 
-* [See Live Site](https://dry-badlands-68660.herokuapp.com/)
-
-<img src="Assets/NoteTaker.gif">
+* [See Live Video]()
 
 
 ## Authors
 
-* **YOUR NAME** 
-
-- [Link to Github](https://github.com/maweiche)
-- [Link to LinkedIn](https://www.linkedin.com/)
+* **Matt Weichel** 
 
 ## License
 

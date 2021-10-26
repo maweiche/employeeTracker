@@ -15,15 +15,10 @@ VALUES  ("Salesperson", 35000, 1),
         ("Accountant", 80000, 4),
         ("Account Manager", 92000, 4);
 
-INSERT INTO teamMember (first_name, last_name, role_id, manager_id)
-VALUES  ("Peter", "Griffin", 6, null),
-        ("Stewie", "Griffin", 7, null),
-        ("Obi-Wan", "Ginobi", 1, null),
-        ("Obi-Wan", "Ginobi", 2, 2),
-        ("Obi-Wan", "Ginobi", 3, 2),
-        ("Obi-Wan", "Ginobi", 4, 2),
-        ("Obi-Wan", "Ginobi", 5, 2),
-        ("Obi-Wan", "Ginobi", 6, 2),
-        ("Obi-Wan", "Ginobi", 8, 2),
-        ("Obi-Wan", "Ginobi", 9, 2),
-        ("Obi-Wan", "Ginobi", 9, 2);     
+INSERT INTO teamMember (first_name, last_name, manager_id, role_id)
+VALUES  ("Peter", "Griffin", null, 1),
+        ("Stewie", "Griffin", null, 2),
+        ("Obi-Wan", "Ginobi", null, 3),
+        ("Princess", "Leia", 1, 4),
+        ("Luke", "Skywalker", 2, 5),
+        ("Kool-Aid", "Man", null, 7);
